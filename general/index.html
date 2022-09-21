@@ -51,12 +51,21 @@
                 console.log(data)
                 data.articles.forEach(article => {
                     let li = document.createElement('li');
+                    let li2 = document.createElement('li');
                     let a = document.createElement('a');
+                    let img = document.createElement('img');
                     a.setAttribute('href', article.url);
                     a.setAttribute('target', '_blank');
                     a.textContent = article.title;
+                    img.setAttribute('src', article.urlToImage);
+                    img.setAttribute('alt', article.title);
+                    img.setAttribute('width', '200');
+                    img.setAttribute('height', '210');
                     li.appendChild(a);
+                    li2.appendChild(img);
+                    
                     newsList.appendChild(li);
+                    newsList.appendChild(li2);
                 })
             }).catch((error) => {
                 console.log(error);
