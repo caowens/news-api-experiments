@@ -16,9 +16,52 @@
     </form>
 
     <div class="container">
-        <ul class="class-list">
-
+        <ul class="news-list">
         </ul>
     </div>
+
+    <script>
+        const searchFrom = document.querySelector('.search');
+        const input = document.querySelector('.input');
+        const newsList = document.querySelector('.news-list');
+
+        searchFrom.addEventListener('submit', retrieve);
+
+        function retrieve(e){
+
+            if (input.value == ''){
+                alert('Silly goose! Input field is empty');
+                return
+            }
+            // This clears the previous results query before makig a new one
+            newsList.innerHTML = '';
+
+            // Prevents entire page from reloadind on submit
+            e.preventDefault();
+
+            // search query
+            const apiKey = '75f74cdac43042f98d3def35ea62d67d';
+            let topic = input.value;
+
+            let url = `https://newsapi.org/v2/everything?q=${topic}&apiKey=${apiKey}`;
+
+            fetch(url).then((res) => {
+                return res.json()
+            }).then((data) => {
+                console.log(data)
+                data.articles.forEach(article => {
+                    let li = document.createElement('li');
+                    let a = document.createElement('a');
+                    a.setAttribute('href', article.url);
+                    a.setAttribute('target', '_blank');
+                    a.textContent = article.title;
+                    li.appendChild(a);
+                    newsList.appendChild(li);
+                })
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+    </script>
 </body>
 </html>
